@@ -24,6 +24,6 @@ my.pdf[0, 2, -1]   -> Selects pages 1, 3 and the last page.
 my.pdf[:5]         -> Selects the first five pages.
 my.pdf[-5:]        -> Selects the last five pages.
 my.pdf[5:]         -> Selects everything but the first five pages.
-my.pdf[-5:]        -> Selects everything but the last five pages.
-my.pdf[2, 3, 5:12] -> Selects pages 2, 4, 6, ..., 11.
+my.pdf[:-5]        -> Selects everything but the last five pages.
+my.pdf[2, 3, 5:12] -> Selects pages 3, 4, 6, ..., 11.
 ```
