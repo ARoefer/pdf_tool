@@ -45,11 +45,11 @@ def get_document_pages(file_arg):
 class PDFOperator(object):
     @classmethod
     def name():
-        raise (NotImplemented)
+        raise NotImplementedError
 
     @classmethod
     def hint():
-        raise (NotImplemented)
+        raise NotImplementedError
 
 
 class PDFInsert(PDFOperator):
@@ -69,7 +69,7 @@ class PDFInsert(PDFOperator):
             raise Exception('PN needs to be between 0 and {} for file {}'.format(len(readerA.pages), a))
 
         newPages = readerA.pages[:pn] + get_document_pages(b) + readerA.pages[pn:]
-        if dest == None:
+        if dest is None:
             dest = a
 
         PdfWriter().addpages(newPages).write(dest)
@@ -144,5 +144,5 @@ if __name__ == '__main__':
                 op(*args[2:])
             except Exception as e:
                 print(e) 
-        except:
+        except KeyError:
             print('Unknown operation {}. Use -h for help.'.format(args[1]))
