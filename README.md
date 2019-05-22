@@ -6,7 +6,7 @@ Are you tired of there not being a simple pdf manipulation tool able to do simpl
 Prerequisites
 -------------
 
-You need at least Python 2.7 (3.x might work too) and the pdfrw package. Install it via pip:
+You need at least Python 2.7 (3.x works too) and the pdfrw package. Install it via pip:
 
 ```bash
 pip install pdfrw
