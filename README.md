@@ -1,3 +1,5 @@
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/ARoefer/pdf_tool.svg?style=flat-square&logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ARoefer/pdf_tool/alerts/)
+
 Terminal PDF Tool
 =================
 
