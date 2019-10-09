@@ -128,8 +128,51 @@ class PDFSlice(PDFOperator):
         PdfWriter().addpages(get_document_pages(args[0])).write(dest)
 
 
+class PDFInverse(PDFOperator):
+    @classmethod
+    def name(cls):
+        return '-r'
+
+    @classmethod
+    def hint(cls):
+        return '  {} <File[]> [<Dest>]:\n    Reverses and slices the given file. Pass Dest to create new file.'.format(cls.name())
+
+    def __init__(self, *args):
+        if len(args) < 1:
+            raise Exception('Need at least a file to slice.')
+
+        dest = args[0].split('[')[0] if len(args) == 1 else args[1]
+        PdfWriter().addpages(reversed(get_document_pages(args[0]))).write(dest)
+
+
+class PDFMerge(PDFOperator):
+    @classmethod
+    def name(cls):
+        return '-m'
+
+    @classmethod
+    def hint(cls):
+        return '  {} <Dest> <F1[]> <F2[]> [<F3[]> ....]:\n    Merges the given files into Dest, by appending their pages sequentially.'.format(cls.name())    
+
+    def __init__(self, *args):
+        if len(args) < 3:
+            raise Exception('Need at least three arguments.')
+
+        pages  = [get_document_pages(d) for d in args[1:]]
+        writer = PdfWriter()
+        eof = False
+        while not eof:
+            eof = True
+            for x in range(len(pages)):
+                if len(pages[x]) > 0:
+                    writer.addpages(pages[x][:1])
+                    pages[x] = pages[x][1:]
+                    eof = False
+        writer.write(args[0])
+
+
 if __name__ == '__main__':
-    ops = {op.name(): op for op in [PDFSlice, PDFInsert, PDFAppendNew, PDFAppend]}
+    ops = {op.name(): op for op in [PDFSlice, PDFInsert, PDFAppendNew, PDFAppend, PDFInverse, PDFMerge]}
 
     args = sys.argv
 
