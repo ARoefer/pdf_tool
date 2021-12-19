@@ -171,8 +171,26 @@ class PDFMerge(PDFOperator):
         writer.write(args[0])
 
 
+class PDFPagify(PDFOperator):
+    @classmethod
+    def name(cls):
+        return '-p'
+
+    @classmethod
+    def hint(cls):
+        return '  {} <File[]> [<Dest>]:\n    Splits given file into one file per page. Pass Dest to give prefix for resulting files.'.format(cls.name())
+
+    def __init__(self, *args):
+        if len(args) < 1:
+            raise Exception('Need one file to split.')
+
+        dest = args[0][:-4] if len(args) == 1 else args[1]
+        for x, page in enumerate(get_document_pages(args[0])):
+            PdfWriter().addpages([page]).write(f'{dest}{x}.pdf')
+
+
 if __name__ == '__main__':
-    ops = {op.name(): op for op in [PDFSlice, PDFInsert, PDFAppendNew, PDFAppend, PDFInverse, PDFMerge]}
+    ops = {op.name(): op for op in [PDFSlice, PDFInsert, PDFAppendNew, PDFAppend, PDFInverse, PDFMerge, PDFPagify]}
 
     args = sys.argv
 
